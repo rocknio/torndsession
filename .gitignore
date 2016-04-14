@@ -8,3 +8,4 @@ build/
 /torndsession.egg-info/
 .tox/
 /env/
+.idea/*

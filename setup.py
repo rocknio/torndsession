@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright @ 2014 Mitchell Chu
+# Copyright @ 2016 Ryan Song
 
 import io
 try:
@@ -37,8 +37,8 @@ setup(
         'Operating System :: OS Independent',
     ],
     keywords='torndsession tornado session redis memcached memory file python',
-    author="MitchellChu",
-    author_email="zxdjsj@126.com",
+    author="Ryan.Song",
+    author_email="xxx@xxx.com",
     url="http://github.com/mitchellchu/torndsession",
     license="MIT",
     packages = ["torndsession"],

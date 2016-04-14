@@ -27,8 +27,7 @@ class MemcachedSession(SessionDriver):
     """
     Use memcached to save session object
     """
-    DEFAULT_MEMCACHED_HOST = '127.0.0.1'
-    DEFAULT_MEMCACHED_PORT = '11211'
+    DEFAULT_MEMCACHED_SERVERS = ('127.0.0.1:11211',)
 
     def __init__(self, **settings):
         super(MemcachedSession, self).__init__(**settings)
@@ -55,9 +54,7 @@ class MemcachedSession(SessionDriver):
 
     def __create_memcached_client(self):
         settings = copy(self.settings)
-        host = settings.pop('host', self.DEFAULT_MEMCACHED_HOST)
-        port = settings.pop('port', self.DEFAULT_MEMCACHED_PORT)
-        servers = '%s:%s' % (host, port)
+        servers = settings.pop('servers', self.DEFAULT_MEMCACHED_SERVERS)
         return memcache.Client(servers, **settings)
             
     def __get_expires_seconds(self, expires):
