@@ -16,12 +16,6 @@ try:
 except:
     import pickle               # py3
 
-"""
-NOTICE:
-This session extension was not be tested.
-you must test all functions before use.
-"""
-
 
 class MemcachedSession(SessionDriver):
     """
