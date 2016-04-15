@@ -16,6 +16,9 @@ class SessionBaseHandler(tornado.web.RequestHandler, torndsession.session.Sessio
     but when the handler is inherit from SessionBaseHandler, in your handler, you just need to add/update/delete session values, SessionBaseHandler will auto save it.
     """
 
+    def data_received(self, chunk):
+        pass
+
     def prepare(self):
         """
         Overwrite tornado.web.RequestHandler prepare.

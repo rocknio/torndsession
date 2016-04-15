@@ -12,7 +12,7 @@ import torndsession
 
 
 def read(*filenames, **kwargs):
-    encoding= kwargs.get('encoding', 'utf-8')
+    encoding = kwargs.get('encoding', 'utf-8')
     sep = kwargs.get('sep', '\n')
     buf = []
     for filename in filenames:
@@ -24,10 +24,10 @@ version = torndsession.version
 long_description = read("README.rst")
 
 setup(
-    name = 'torndsession',
-    version = version,
-    description = "Session extensions for Tornado",
-    long_description = long_description,
+    name='torndsession',
+    version=version,
+    description="Session extensions for Tornado",
+    long_description=long_description,
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Topic :: Internet :: WWW/HTTP :: Session',
@@ -41,8 +41,8 @@ setup(
     author_email="xxx@xxx.com",
     url="http://github.com/mitchellchu/torndsession",
     license="MIT",
-    packages = ["torndsession"],
+    packages=["torndsession"],
     include_package_data=True,
     zip_safe=True,
-    install_requires=['tornado',],
+    install_requires=['tornado', ],
 )

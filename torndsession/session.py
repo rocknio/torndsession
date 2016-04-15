@@ -19,8 +19,8 @@ except ImportError:
 class SessionManager(object):
 
     SESSION_ID = 'msid'
-    DEFAULT_SESSION_LIFETIME = 1200 # seconds
-    
+    DEFAULT_SESSION_LIFETIME = 1200  # seconds
+
     def __init__(self, handler):
         self._default_session_lifetime = datetime.datetime.utcnow() + datetime.timedelta(seconds = self.DEFAULT_SESSION_LIFETIME)
         self.handler = handler
@@ -66,7 +66,8 @@ class SessionManager(object):
         driver = self.settings.get("driver")
         if not driver: raise SessionConfigurationError('driver not found')
         driver_settings = self.settings.get("driver_settings", {})
-        if not driver_settings: raise SessionConfigurationError('driver settings not found.')
+        if not driver_settings:
+            raise SessionConfigurationError('driver settings not found.')
 
         cache_driver = self.settings.get("cache_driver", True)
         if cache_driver:
@@ -105,24 +106,24 @@ class SessionManager(object):
                 driver = 'memory',
                 driver_settings = {'host':self,}, # use application to save session data.
                 force_persistence = True,
-        	cache_driver = True, # cache driver in application. 
-        	cookie_config = {'expires_days':10, 'expires':datetime.datetime.utcnow(),}, # tornado cookies configuration
+            cache_driver = True, # cache driver in application.
+            cookie_config = {'expires_days':10, 'expires':datetime.datetime.utcnow(),}, # tornado cookies configuration
             },
         )
         driver:			default enum value: memory, file, redis, memcache. 
         driver_settings:	the data driver need. settings may be the host, database, password, and so on.
-				redis settings as follow:
-				      driver_settings = {
-				      		      host = '127.0.0.1',
-						      port = '6379',
-						      db = 0, # where the session data to save.
-						      password = 'session_db_password', # if database has password
-				 	}
+                redis settings as follow:
+                  driver_settings = {
+                                  host = '127.0.0.1',
+                              port = '6379',
+                              db = 0, # where the session data to save.
+                              password = 'session_db_password', # if database has password
+                    }
         force_persistence:	default is False.
-				In default, session's data exists in memory only, you must persistence it by manual.
-				Generally, rewrite Tornado RequestHandler's prepare(self) and on_finish(self) to persist session data is recommended. 
-        		     	when this value set to True, session data will be force to persist everytime when it has any change.
-				
+                In default, session's data exists in memory only, you must persistence it by manual.
+                Generally, rewrite Tornado RequestHandler's prepare(self) and on_finish(self) to persist session data is recommended.
+                        when this value set to True, session data will be force to persist everytime when it has any change.
+
         """
         session_settings = self.handler.settings.get("session")
         if not session_settings: # use default
@@ -142,12 +143,16 @@ class SessionManager(object):
     def get(self, key, default=None):
         """
         Return session value with name as key.
+        :param default:
+        :param key:
         """
         return self.session.get(key, default)
 
     def set(self, key, value):
         """
         Add/Update session value
+        :param value:
+        :param key:
         """
         self.session[key]=value
         self._is_dirty = True
@@ -159,6 +164,7 @@ class SessionManager(object):
     def delete(self, key):
         """
         Delete session key-value pair
+        :param key:
         """
         if key in self.session:
             del self.session[key]
@@ -192,7 +198,7 @@ class SessionManager(object):
     def __getitem__(self, key):
         val = self.get(key)
         if val: return val
-        raise KeyError('%s not found' % key) 
+        raise KeyError('%s not found' % key)
 
     def __contains__(self, key):
         return key in self.session

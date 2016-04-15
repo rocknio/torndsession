@@ -9,20 +9,22 @@ from torndsession.driver import SessionDriver
 from torndsession.session import SessionConfigurationError
 import os
 from os.path import join, exists, isdir
-import sys
 import datetime
 utcnow = datetime.datetime.utcnow
 try:
-    import cPickle as pickle    #  py2
+    #  py2
+    import cPickle as pickle
 except:
-    import pickle               #  py3
+    #  py3
+    import pickle
 
 
 class FileSession(SessionDriver):
     """
     System File to save session object.
     """
-    DEFAULT_SESSION_POSITION = './#_sessions'  #  default host is '#_sessions' directory which is in current directory.
+    #  default host is '#_sessions' directory which is in current directory.
+    DEFAULT_SESSION_POSITION = './#_sessions'
     """
     Session file default save position.
     In a recommendation, you need give the host option.when host is missed, system will use this value by default.
@@ -42,14 +44,16 @@ class FileSession(SessionDriver):
         self.host = settings.get("host", self.DEFAULT_SESSION_POSITION)
         self._prefix = settings.get("prefix", 'default')
         if not exists(self.host):
-            os.makedirs(self.host, 448)  #  only owner can visit this session directory.
+            #  only owner can visit this session directory.
+            os.makedirs(self.host, 448)
 
         if not isdir(self.host):
             raise SessionConfigurationError('session host not found')
 
     def get(self, session_id):
         session_file = join(self.host, self._prefix + session_id)
-        if not exists(session_file): return {}
+        if not exists(session_file):
+            return {}
 
         with open(session_file, 'rb') as rf:
             session = pickle.load(rf)
@@ -75,7 +79,9 @@ class FileSession(SessionDriver):
             os.remove(session_file)
 
     def remove_expires(self):
-        if not exists(self.host) or not isdir(self.host):return
+        if not exists(self.host) or not isdir(self.host):
+            return
+
         now = utcnow()
         for file in os.listdir(self.host):
             if file.startswith(self._prefix):
